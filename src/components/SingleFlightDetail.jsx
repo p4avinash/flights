@@ -25,9 +25,9 @@ const SingleFlightDetail = () => {
   } = data
 
   //if flight detail isn't available display error page
-  if (Object.keys(data)?.length === 0) {
-    return <Error />
-  }
+  // if (Object.keys(data)?.length === 0) {
+  //   return <Error />
+  // }
 
   return (
     <div className='flex flex-col items-center capitalize'>

@@ -9,7 +9,6 @@ import {
   setErrorMessage,
 } from "../slices/appSlice"
 import { ALL_FLIGHTS, SINGLE_FLIGHT } from "../constants"
-import axios from "axios"
 
 //Generic custom hook to fetch data on interval based on the URL passed
 const useFetch = (url, type) => {
@@ -20,14 +19,15 @@ const useFetch = (url, type) => {
     // dispatch(setErrorMessage(null))
     dispatch(setIsLoadingTrue())
     try {
-      const response = await axios.get(url)
+      const response = await fetch(url)
+      const data = await response.json()
 
       if (type === ALL_FLIGHTS) {
-        dispatch(addAllFlightsDataToStore(response.data))
+        dispatch(addAllFlightsDataToStore(data))
         dispatch(setErrorMessage(null))
       }
       if (type === SINGLE_FLIGHT) {
-        dispatch(addSingleFlightDataToStore(response.data))
+        dispatch(addSingleFlightDataToStore(data))
         dispatch(setErrorMessage(null))
       }
       dispatch(setIsLoadingFalse())
