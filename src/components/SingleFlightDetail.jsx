@@ -6,12 +6,14 @@ import { useSelector } from "react-redux"
 import { API_URL, SINGLE_FLIGHT } from "../utils/constants"
 import { SingleFlightShimmer } from "../pages"
 import warningImg from "../assets/warning.svg"
+import useIsOnline from "../utils/hooks/useIsOnline"
 
 const SingleFlightDetail = () => {
   const { flightId } = useParams()
 
   //using custom hook to fetch data for single flight
   useFetch(`${API_URL}/${flightId}`, SINGLE_FLIGHT)
+  const isOnline = useIsOnline()
 
   const data = useSelector((store) => store.app.singleFlightData)
   const errorMessage = useSelector((store) => store.app.errorMessage)
@@ -29,6 +31,18 @@ const SingleFlightDetail = () => {
   //display shimmer UI when loading for the first time
   if (Object.keys(data)?.length === 0) {
     return <SingleFlightShimmer />
+  }
+
+  //Code to display message if user's internet connection is lost while using the app
+  if (!isOnline) {
+    return (
+      <div className='flex flex-col items-center justify-center h-screen'>
+        <img className='w-96' src={warningImg} alt='warning' />
+        <h1 className='text-lg sm:text-3xl text-gray-600 mt-10'>
+          🔴 Offline, Please check you internet connection
+        </h1>
+      </div>
+    )
   }
 
   //Code to display message when there's some issue when fetching data from API
