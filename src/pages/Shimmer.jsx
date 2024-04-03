@@ -21,7 +21,7 @@ const Shimmer = () => {
             return (
               <tr key={index} className={`border`}>
                 <td>
-                  <p className='bg-gray-300 inline-block text-white px-2 rounded-lg w-16 float-start mx-36'>
+                  <p className='bg-gray-300 inline-block text-white px-2 rounded-lg w-16 float-start mx-[4rem]'>
                     ‎
                   </p>
                 </td>

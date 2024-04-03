@@ -4,7 +4,8 @@ import img from "../assets/aircraft.svg"
 import useFetch from "../utils/hooks/useFetch"
 import { useSelector } from "react-redux"
 import { API_URL, SINGLE_FLIGHT } from "../utils/constants"
-import { Error } from "../pages"
+import { SingleFlightShimmer } from "../pages"
+import warningImg from "../assets/warning.svg"
 
 const SingleFlightDetail = () => {
   const { flightId } = useParams()
@@ -13,6 +14,7 @@ const SingleFlightDetail = () => {
   useFetch(`${API_URL}/${flightId}`, SINGLE_FLIGHT)
 
   const data = useSelector((store) => store.app.singleFlightData)
+  const errorMessage = useSelector((store) => store.app.errorMessage)
 
   const {
     id,
@@ -24,10 +26,24 @@ const SingleFlightDetail = () => {
     status,
   } = data
 
-  //if flight detail isn't available display error page
-  // if (Object.keys(data)?.length === 0) {
-  //   return <Error />
-  // }
+  //display shimmer UI when loading for the first time
+  if (Object.keys(data)?.length === 0) {
+    return <SingleFlightShimmer />
+  }
+
+  //Code to display message when there's some issue when fetching data from API
+  if (errorMessage) {
+    return (
+      <div>
+        <div className='flex flex-col items-center justify-center h-screen'>
+          <img className='w-96' src={warningImg} alt='warning' />
+          <h1 className='text-lg sm:text-3xl text-gray-600 mt-10 '>
+            {errorMessage}
+          </h1>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className='flex flex-col items-center capitalize'>

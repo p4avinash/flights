@@ -23,3 +23,16 @@ test("render the table header for flight data", () => {
   const tableHeader = screen.getByText("Flight Number")
   expect(tableHeader).toBeInTheDocument()
 })
+
+test("render the table data for flight data", () => {
+  render(
+    <StaticRouter>
+      <Provider store={store}>
+        <FlightList flightData={mockApiData} />
+      </Provider>
+    </StaticRouter>
+  )
+
+  const tableData = screen.getByText("Airline 1")
+  expect(tableData).toBeInTheDocument()
+})
