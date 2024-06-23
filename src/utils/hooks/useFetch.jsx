@@ -10,7 +10,7 @@ import {
 } from "../slices/appSlice"
 import { ALL_FLIGHTS, SINGLE_FLIGHT } from "../constants"
 
-//Generic custom hook to fetch data on interval based on the URL passed
+//Generic custom hook to fetch data on interval based on the URL passed.
 const useFetch = (url, type) => {
   const dispatch = useDispatch()
 
